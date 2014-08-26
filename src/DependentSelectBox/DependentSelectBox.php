@@ -12,6 +12,7 @@ use InvalidArgumentException;
 use LogicException;
 use Nette\NotSupportedException;
 use Nette\Forms\Container as FormContainer;
+use Exception;
 
 
 class DependentSelectBox extends SelectBox {
@@ -19,7 +20,7 @@ class DependentSelectBox extends SelectBox {
 // <editor-fold defaultstate="collapsed" desc="variables">
 
 	/** @var boolean "Disable" child DependentSelectBox-es or select 1st value? (Disabling does not effect validation) */
-	public static $disableChilds = true;
+	public static $disableChilds = false;
 	/** @var string Html class set on "disabled" control */
 	public static $disabledHtmlClass = "disabledControl";
 	/** @var Title for unselected value */
@@ -123,7 +124,7 @@ class DependentSelectBox extends SelectBox {
 		if($value !== null && !$this->hasEmptyValue() && $this->hasAnyParentEmptyValue()) {
 			throw new LogicException("Cant set value of dependent component when parent have no value ! (Control: '$this->name')");
 		}
-		parent::setValue($value);
+		try{ parent::setValue($value); } catch (Exception $e){}
 		if($refreshTree && !$this->hasEmptyValue())
 			$this->refresh(false);
 		return $this;
@@ -149,7 +150,7 @@ class DependentSelectBox extends SelectBox {
 		if(!$this->hasEmptyValue() && $this->hasAnyParentEmptyValue()) {
 			throw new LogicException("Cant set value of dependent component when parent have no value ! (Control: '$this->name')");
 		}
-		parent::setDefaultValue($value);
+		try{ parent::setDefaultValue($value); } catch (Exception $e){}
 		$this->refresh(false);
 		return $this;
 	}
