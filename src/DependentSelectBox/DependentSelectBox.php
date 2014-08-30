@@ -7,7 +7,7 @@
 
 namespace DependentSelectBox;
 
-use Nette\Forms\Controls\SelectBox;
+use Haxtip\Forms\SelectBox;
 use InvalidArgumentException;
 use LogicException;
 use Nette\NotSupportedException;
@@ -160,7 +160,7 @@ class DependentSelectBox extends SelectBox {
 	 * @param  array
 	 * @return DependentSelectBox  provides a fluent interface
 	 */
-	public function setItems(array $items, $useKeys = TRUE) {
+	public function setItems( array $items, $useKeys = TRUE) {
 		if(!$useKeys)
 			throw new NotSupportedException("Working without keys not supported !");
 		return parent::setItems($items, $useKeys);
